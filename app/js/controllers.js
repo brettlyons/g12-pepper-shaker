@@ -11,8 +11,9 @@ app.controller('PhoneController', function($scope) {
     $scope.accelEventData = event.acceleration;
     // window.alert(event.acceleration.x);
     // we use to determine accel: event.acceleration;
+
     if(!tested) {
-      window.alert("eventData:", event);
+      window.alert("eventData: " + event.acceleration);
       tested = true;
     }
     // Accels are all in is in m/s^2
