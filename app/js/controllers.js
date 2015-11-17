@@ -1,9 +1,6 @@
 app.controller('PhoneController', function($scope) {
   $scope.greeting = "Hello World!";
   $scope.shakeCount;
-  $scope.xAcceleration = 0;
-  $scope.yAcceleration = 0
-  $scope.zAcceleration = 0;
 
   window.addEventListener('devicemotion', handleDeviceAccelChange, true);
   
