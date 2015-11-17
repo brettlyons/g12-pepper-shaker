@@ -8,7 +8,7 @@ app.controller('PhoneController', function($scope) {
   //   window.alert("DeviceMotionEvent supported");
   // }
   $scope.handleDeviceAccelChange = function(event) {
-    event.preventDefault();
+     event.preventDefault();
     // window.alert(event.acceleration.x);
     // we use to determine accel: event.acceleration;
 
