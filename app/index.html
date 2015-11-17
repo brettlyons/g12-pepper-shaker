@@ -2,6 +2,7 @@
 <html lang="en" ng-app='shakeRaceApp'>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TESTING Shake Phone App</title>
   <!-- styles -->
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -22,8 +23,16 @@
       <div class="row">
         <div class="col-md-12">
           <div ng-controller="PhoneController">
+            <h1>THE GREETING: {{greeting}}
+            </h1>
+            <p></p>
             <h1>Phone Acceleration Info Listing</h1>
             <p></p>
+            <button ng-click="handleDeviceAccelChange()">
+              Click To Fire The Event
+            </button>
+            <h2>QUANTITY OF CLICKS: {{quant}}
+            </h2>
             <ul>
               <li>X Axis Acceleration: {{xAcceleration}}</li>
               <p></p>
