@@ -2,8 +2,10 @@ app.controller('PhoneController', function($scope) {
   $scope.greeting = "Hello World!";
   $scope.shakeCount;
 
+  window.alert("Testing for DeviceMotion");
+  
   if (window.DeviceMotionEvent) {
-    console.log("DeviceMotionEvent supported");
+    window.alert("DeviceMotionEvent supported");
   } 
   window.addEventListener('devicemotion', handleDeviceAccelChange, true);
   
