@@ -1,0 +1,8 @@
+<h1>Welcome to Shake Race</h1>
+<div class="lead">{{title}}</div>
+
+<div class='col-md-12 well'>
+  <div ng-repeat='player in players' class='col-md-1'>
+  <div style='height: {{ player.score * 100 }}px; background-color: red' >{{ player.name }}</div>
+  </div>
+</div>
