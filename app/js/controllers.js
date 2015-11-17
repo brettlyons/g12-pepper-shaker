@@ -6,16 +6,10 @@ app.controller('PhoneController', function($scope) {
   // if (window.DeviceMotionEvent) {
   //   window.alert("DeviceMotionEvent supported");
   // }
-  var tested = false;
   
   function handleDeviceAccelChange(event) {
-    $scope.accelEventData = event;
-
-    if (!tested) {
-      window.alert("handleDeviceAccelChange called");
-      tested = true;
-    }
-
+    $scope.accelEventData = event.acceleration;
+    window.alert(event.acceleration.x);
     // we use to determine accel: event.acceleration;
     var xAccel = event.acceleration.x;
     var yAccel = event.acceleration.y;
