@@ -8,20 +8,31 @@ app.controller('PhoneController', function($scope) {
   //   window.alert("DeviceMotionEvent supported");
   // }
   $scope.handleDeviceAccelChange = function(event) {
+    event.preventDefault();
     // window.alert(event.acceleration.x);
     // we use to determine accel: event.acceleration;
 
     // Accels are all in is in m/s^2
     // debugger;
-    $scope.greeting = 'the handleDeviceAccelChange function happening';
-    $scope.quant++;
-    $scope.xAcceleration = event.acceleration.x;
-    $scope.yAcceleration = event.acceleration.y;
-    $scope.zAcceleration = event.acceleration.z;
-    $scope.accelEventData = event.acceleration;
+    $scope.greeting = 'PING PONG';
+    // $scope.quant++;
+    // for(var i = 0; i < 1000; i++){
+    //   $scope.xAcceleration = i;
+    // }
+    if (event.acceleration.x > 10) {
+      $scope.xAcceleration = event.acceleration.x;
+    }
+    if (event.acceleration.y > 10) {
+      $scope.yAcceleration = event.acceleration.y;
+    }
+    if (event.acceleration.z > 10) {
+      $scope.zAcceleration = event.acceleration.z;
+    }
+    // $scope.accelEventData = event.acceleration;
+    $scope.$apply();
   };
+  // $on('devicemotion', $scope.handleDeviceAccelChange);
+  window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
-  window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, false);
-  //window.doStuff = handleDeviceAccelChange;
 });
 
