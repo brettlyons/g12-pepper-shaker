@@ -1,4 +1,31 @@
-
-
   <h1>Home page</h1>
   <a href="/playgrid"> Playgrid </a>
+  <!-- We might split the below out into a separate route based on wether it's a phone or not -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="phonePhysicsInfo">
+          <h1>THE GREETING: {{greeting}}
+          </h1>
+          <p></p>
+          <h1>Phone Acceleration Info Listing</h1>
+          <p></p>
+          <button ng-click="handleDeviceAccelChange()">
+            Click To Fire The Event
+          </button>
+          <h2>QUANTITY OF CLICKS: {{quant}}
+          </h2>
+          <ul>
+            <li>X Axis Acceleration: {{xAcceleration}}</li>
+            <p></p>
+            <li>Y Axis Acceleration: {{yAcceleration}}</li>
+            <p></p>
+            <li>Z Axis Acceleration: {{zAcceleration}}</li>
+          </ul>
+          <h3>Total Event Data: {{accelEventData}}</h3>
+        <!-- add content here -->
+        </div>
+      </div>
+    </div>
+  </div>
+

@@ -1,7 +1,7 @@
 var app = angular.module('shakeRaceApp', ['ngRoute']);
 
-app.config(function($routeProvider, $locationProvider){
-   $routeProvider
+app.config(function($routeProvider, $locationProvider) {
+  $routeProvider
     .when('/', {
       templateUrl: 'partials/home.html',
       controller: 'PhoneController'
@@ -9,8 +9,6 @@ app.config(function($routeProvider, $locationProvider){
     .when('/playgrid', {
       templateUrl: 'partials/playGrid.html',
       controller: 'PlayGridController'
-    })
+    });
   $locationProvider.html5Mode(true);
-})
-
-
+});
