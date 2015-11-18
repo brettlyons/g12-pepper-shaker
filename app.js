@@ -10,7 +10,7 @@ var users = require('./routes/users');
 
 var app = express();
 
-app.io = require('socket.io')(); 
+app.io = require('socket.io')();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,19 +19,19 @@ app.set('view engine', 'jade');
 
 app.io.on('connection', function (socket) {
   console.log('SOCKET CONNECTED');
-  
+
   socket.emit('news', { hello: 'world' });
-  
+
   socket.on('my other event', function (shakeData) {
     console.log(socket.id);
     console.log('A shake happened! Here\'s the data:', shakeData);
   });
-  
+
   socket.on('shake', function (data) {
     console.log("OTHER DATA", data);
   });
   socket.emit('moveracer', {
-    
+
   });
 });
 // HACK ALERT
