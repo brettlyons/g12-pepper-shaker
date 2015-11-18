@@ -4,18 +4,18 @@ app.controller('PhoneController', function($scope) {
   $scope.greeting = 'Hello World Of Physics!';
   const socket = io();
 
-  socket.on('news', function (data) {
-    console.log(data);
-    $scope.newsFromSocket = data;
-    socket.emit('my other event', { my: 'data' });
-    $scope.$apply();
-  });
+  // socket.on('news', function (data) {
+  //   console.log(data);
+  //   $scope.newsFromSocket = data;
+  //   socket.emit('my other event', { my: 'data' });
+  //   $scope.$apply();
+  // });
   
   $scope.xShakes = 0; // used to "count shakes" in game logic later
   $scope.yShakes = 0;
   $scope.zShakes = 0;
   $scope.emitShake = function(data) {
-    return socket.emit('my other event', data);
+    return socket.emit('shake', data);
   };
 
   $scope.handleDeviceAccelChange = function(event) {
