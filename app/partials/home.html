@@ -10,17 +10,20 @@
           <p></p>
           <h1>Phone Acceleration Info Listing</h1>
           <p></p>
-          <button ng-click="handleDeviceAccelChange()">
-            Click To Fire The Event
-          </button>
-          <h2>QUANTITY OF CLICKS: {{quant}}
-          </h2>
+          <h2>News from the Socket: {{newsFromSocket}}</h2>
           <ul>
             <li>X Axis Acceleration: {{xAcceleration}}</li>
             <p></p>
+            <li>X shakes: {{xShakes}}
+            </li>
             <li>Y Axis Acceleration: {{yAcceleration}}</li>
             <p></p>
+            <li>Y shakes: {{yShakes}}
+            </li>
             <li>Z Axis Acceleration: {{zAcceleration}}</li>
+            <p></p>
+            <li>Z shakes: {{zShakes}}
+            </li>
           </ul>
           <h3>Total Event Data: {{accelEventData}}</h3>
         <!-- add content here -->

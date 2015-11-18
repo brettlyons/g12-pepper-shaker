@@ -10,9 +10,31 @@ var users = require('./routes/users');
 
 var app = express();
 
+app.io = require('socket.io')(); 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+
+app.io.on('connection', function (socket) {
+  console.log('SOCKET CONNECTED');
+  
+  socket.emit('news', { hello: 'world' });
+  
+  socket.on('my other event', function (shakeData) {
+    console.log(socket.id);
+    console.log('A shake happened! Here\'s the data:', shakeData);
+  });
+  
+  socket.on('shake', function (data) {
+    console.log("OTHER DATA", data);
+  });
+  socket.emit('moveracer', {
+    
+  });
+});
+// HACK ALERT
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -26,6 +48,7 @@ app.use(express.static(path.join(__dirname, 'app')));
 
 app.use('/', routes);
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
