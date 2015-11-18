@@ -10,19 +10,7 @@ app.controller('PhoneController', function($scope) {
   //   window.alert("DeviceMotionEvent supported");
   // }
   $scope.handleDeviceAccelChange = function(event) {
-     event.preventDefault();
-    // window.alert(event.acceleration.x);
-    // we use to determine accel: event.acceleration;
-
-    // Accels are all in is in m/s^2
-    // debugger;
-    // $scope.greeting = 'PING PONG';
-    // $scope.quant++;
-    // for(var i = 0; i < 1000; i++){
-    //   $scope.xAcceleration = i;
-    // }
-    // 10 is an arbitrary acceleration range.
-    // later we may need to redefine it, and it should
+    event.preventDefault();
     if (event.acceleration.x > ACCELERATION_REPORT_MAX) {
       $scope.xAcceleration = event.acceleration.x;
     }
@@ -35,7 +23,7 @@ app.controller('PhoneController', function($scope) {
     // $scope.accelEventData = event.acceleration;
     $scope.$apply();
   };
-  // $on('devicemotion', $scope.handleDeviceAccelChange);
+
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 }).controller('PlayGridController', function($scope) {
   // players are hardcoded for now, eventually this will be aggregated from somewhere else
