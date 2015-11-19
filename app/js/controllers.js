@@ -3,50 +3,71 @@ const ACCELERATION_REPORT_MIN = 12;
 app.controller('PhoneController', function($scope) {
   $scope.greeting = 'Hello World Of Physics!';
   const socket = io();
-
-  socket.on('news', function (data) {
-    console.log(data);
-    $scope.newsFromSocket = data;
-    socket.emit('my other event', { my: 'data' });
-    $scope.$apply();
-  });
+  var data = 0;
   
-  $scope.xShakes = 0; // used to "count shakes" in game logic later
-  $scope.yShakes = 0;
-  $scope.zShakes = 0;
+  // $scope.xShakes = 0; // used to "count shakes" in game logic later
+  // $scope.yShakes = 0;
+  // $scope.zShakes = 0;
   $scope.emitShake = function(data) {
-    return socket.emit('my other event', data);
+    return socket.emit('shake', data);
   };
+
+  function changeInnerHTML(data) {
+   var title = document.getElementById('title');
+   console.log(data);
+   title.innerHTML = data + 'Shakes';
+   }
+
+  var shakes = 0;
+  socket.on('moveracer', function (data) {
+  // console.log('moveracer');
+  // console.log(data);
+  shakes += data.shakes;
+  // console.log(shakes)
+  var data = shakes;
+    socket.emit(changeInnerHTML(data));
+  });
+
 
   $scope.handleDeviceAccelChange = function(event) {
     event.preventDefault();
-    if (event.acceleration.x > ACCELERATION_REPORT_MIN) {
-      $scope.xAcceleration = event.acceleration.x;
-      $scope.xShakes++;
-      $scope.emitShake({
-        xShakes: $scope.xShakes,
-        yShakes: $scope.yShakes,
-        zShakes: $scope.zShakes
-      });
+    // if (event.acceleration.x > ACCELERATION_REPORT_MIN) {
+    //   $scope.xAcceleration = event.acceleration.x;
+    //   $scope.xShakes++;
+    //   $scope.emitShake({
+    //     xShakes: $scope.xShakes,
+    //     yShakes: $scope.yShakes,
+    //     zShakes: $scope.zShakes
+    //   });
+    // }
+    // if (event.acceleration.y > ACCELERATION_REPORT_MIN) {
+    //   $scope.yAcceleration = event.acceleration.y;
+    //   $scope.yShakes++;
+    //   $scope.emitShake({
+    //     xShakes: $scope.xShakes,
+    //     yShakes: $scope.yShakes,
+    //     zShakes: $scope.zShakes
+    //   });
+    // }
+    // if (event.acceleration.z > ACCELERATION_REPORT_MIN) {
+    //   $scope.zAcceleration = event.acceleration.z;
+    //   $scope.zShakes++;
+    //   $scope.emitShake({
+    //     xShakes: $scope.xShakes,
+    //     yShakes: $scope.yShakes,
+    //     zShakes: $scope.zShakes
+    //   });
+    // }
+
+    var $scope.totalAcceleration = event.acceleration.x + event.acceleration.y + event.acceleration.z;
+
+    if (totalAcceleration > 150) {
+          data = 1;
+    } else {
+      data = 0;
     }
-    if (event.acceleration.y > ACCELERATION_REPORT_MIN) {
-      $scope.yAcceleration = event.acceleration.y;
-      $scope.yShakes++;
-      $scope.emitShake({
-        xShakes: $scope.xShakes,
-        yShakes: $scope.yShakes,
-        zShakes: $scope.zShakes
-      });
-    }
-    if (event.acceleration.z > ACCELERATION_REPORT_MIN) {
-      $scope.zAcceleration = event.acceleration.z;
-      $scope.zShakes++;
-      $scope.emitShake({
-        xShakes: $scope.xShakes,
-        yShakes: $scope.yShakes,
-        zShakes: $scope.zShakes
-      });
-    }
+
+    $scope.emitShake(data)
     // $scope.accelEventData = event.acceleration;
     $scope.$apply();
   };

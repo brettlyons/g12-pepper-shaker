@@ -20,19 +20,16 @@ app.set('view engine', 'jade');
 app.io.on('connection', function (socket) {
   console.log('SOCKET CONNECTED');
 
-  socket.emit('news', { hello: 'world' });
-
-  socket.on('my other event', function (shakeData) {
-    console.log(socket.id);
-    console.log('A shake happened! Here\'s the data:', shakeData);
-  });
-
   socket.on('shake', function (data) {
-    console.log("OTHER DATA", data);
+    console.log("DATA: " + data);
+    socket.emit('moveracer', {
+      user: socket.id,
+      shakes: data
+    });
   });
-  socket.emit('moveracer', {
+   
 
-  });
+
 });
 // HACK ALERT
 
