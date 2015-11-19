@@ -18,14 +18,17 @@ app.set('view engine', 'jade');
 
 
 app.io.on('connection', function (socket) {
-  console.log('SOCKET CONNECTED');
-
+  console.log('SOCKET CONNECTED.  Socket Info:\n', socket);
+  console.log('END SOCKET INFO');
+  var shakes = 0;
   socket.on('shake', function (data) {
-    console.log("DATA: " + data);
-    socket.emit('moveracer', {
+    // console.log("SERVER DATA: " + data);
+    shakes++;
+    socket.broadcast.emit('moveracer', {
       userId: socket.id,
-      shakes: data.shakeIncrement
+      shakes: shakes
     });
+    
   });
   
 
