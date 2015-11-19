@@ -1,12 +1,12 @@
 const ACCELERATION_REPORT_MIN = 12;
 
-app.controller('PhoneController', function($scope, $location) {
+app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.socket = io();
   $scope.shakes = 0;
 
   $scope.addName = function() {
-    $scope.personName = $scope.name;
-    console.log($scope.personName)
+    $rootScope.name = $scope.name;
+    console.log($rootScope.name);
     $location.url('/race')
   }
 
@@ -22,9 +22,12 @@ app.controller('PhoneController', function($scope, $location) {
       event.acceleration.z;
 
     if($scope.totalAcceleration > 10) {
-      $scope.emitShake(); // name passed into Emit Shake here?
-      $scope.newsFromSocket = $scope.totalAcceleration;
       $scope.shakes++;
+      $scope.emitShake({
+        name: $rootScope.name,
+        shakes: $scope.shakes
+      }); 
+      $scope.newsFromSocket = $scope.totalAcceleration;
     }
     // $scope.accelEventData = event.acceleration;
     $scope.$apply();

@@ -20,10 +20,11 @@ app.set('view engine', 'jade');
 app.io.on('connection', function (socket) {
   var shakes = 0;
   socket.on('shake', function (data) {
-    shakes++;
+    //shakes++;
     socket.broadcast.emit('moveracer', {
       userId: socket.id,
-      shakes: shakes
+      shakes: data.shakes,
+      name: data.name
     });
   });
 
