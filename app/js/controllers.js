@@ -3,60 +3,38 @@ const ACCELERATION_REPORT_MIN = 12;
 app.controller('PhoneController', function($scope) {
   $scope.greeting = 'Hello World Of Physics!';
   const socket = io();
-  var data = 0;
-  
-  // $scope.xShakes = 0; // used to "count shakes" in game logic later
-  // $scope.yShakes = 0;
-  // $scope.zShakes = 0;
-
-
-  // socket.on('news', function (data) {
-  //   console.log(data);
-  //   $scope.newsFromSocket = data;
-  //   socket.emit('my other event', { my: 'data' });
-  //   $scope.$apply();
-  // });
-
 
   $scope.emitShake = function(data) {
     return socket.emit('shake', data);
   };
 
-  // function changeInnerHTML(data) {
-  //  var title = document.getElementById('title');
-  //  console.log(data);
-  //  title.innerHTML = data + 'Shakes';
-  //  }
-
-  var shakes = 0;
-  socket.on('moveracer', function (data) {
-  // console.log('moveracer');
-  // console.log(data);
-  shakes += data.shakes;
-  // console.log(shakes)
-  var data = shakes;
-    socket.emit(changeInnerHTML(data));
-  });
-
 
   $scope.handleDeviceAccelChange = function(e) {
     event.preventDefault();
-    var totalAcceleration = event.acceleration.x + event.acceleration.y + event.acceleration.z;
 
-    if (totalAcceleration > 10) {
-          data = 1;
-    } else {
-      data = 0;
+
+    $scope.totalAcceleration = event.acceleration.x +
+      event.acceleration.y +
+      event.acceleration.z;
+    
+    if($scope.totalAcceleration > 50) {
+      $scope.emitShake({shakeIncrement: 1});
     }
-    $scope.emitShake(data)
     // $scope.accelEventData = event.acceleration;
-    $scope.$apply();
+    $scope.$apply(); 
   };
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
 }).controller('PlayGridController', function($scope) {
   // players are hardcoded for now, eventually this will be aggregated from somewhere else
   // so it's sort of a stub that will be adjusted later
+  // $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
+
+  socket.on('moveracer', function (data) {
+    // change the 1 object in the array that matches (data)
+    $scope.players = [{name: "Tester Testington", score: data.shakes, userId: data.userId }]; // test data
+    $scope.apply();
+  });
+  
   $scope.title = "SHAKE RACE!!!";
-  $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}];
 });
