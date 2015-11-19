@@ -2,12 +2,11 @@ const ACCELERATION_REPORT_MIN = 12;
 
 app.controller('PhoneController', function($scope) {
   $scope.greeting = 'Hello World Of Physics!';
-  $scope.socket = io();
+  const socket = io();
 
   $scope.emitShake = function(data) {
-    return $scope.socket.emit('shake', data);
+    return socket.emit('shake', data);
   };
-
 
   $scope.handleDeviceAccelChange = function(e) {
     event.preventDefault();
@@ -26,18 +25,15 @@ app.controller('PhoneController', function($scope) {
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
 }).controller('PlayGridController', function($scope) {
-  if(!$scope.socket) { $scope.socket = io(); }
   // players are hardcoded for now, eventually this will be aggregated from somewhere else
   // so it's sort of a stub that will be adjusted later
   // $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
-  // $scope.title = "SHAKE RACE!!!";
 
-  $scope.socket.on('moveracer', function (data) {
+  socket.on('moveracer', function (data) {
     // change the 1 object in the array that matches (data)
-    $scope.players = [{name: "Tester Testington", score: data.shakes}]; // DEBUG DEBUG DEBUG
-    // $scope.players = [{name: "Tester Testington", score: data.shakes, userId: data.userId }]; // test data
+    $scope.players = [{name: "Tester Testington", score: data.shakes, userId: data.userId }]; // test data
     $scope.apply();
   });
   
-
+  $scope.title = "SHAKE RACE!!!";
 });
