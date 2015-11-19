@@ -4,7 +4,7 @@ var router = express.Router();
 /* CATCHALL */
 router.get('*', function(req, res, next) {
   res.sendFile('index.html', {
-    root: __dirname + '/../public/'
+    root: __dirname + '../public/'
   })
 });
 

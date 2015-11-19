@@ -32,12 +32,6 @@ app.io.on('connection', function (socket) {
   });
   
 
-  // socket.emit('news', { hello: 'world' });
-
-  // socket.on('my other event', function (shakeData) {
-  //   console.log(socket.id);
-  //   console.log('A shake happened! Here\'s the data:', shakeData);
-  // });
 });
 // HACK ALERT
 

@@ -1,42 +1,43 @@
 const ACCELERATION_REPORT_MIN = 12;
 
-app.controller('PhoneController', function($scope) {
+app.controller('PhoneController', function($scope, $location) {
   $scope.socket = io();
-  $scope.greeting = 'Hello World Of Physics!';
+  $scope.shakes = 0;
 
   $scope.addName = function() {
-    console.log($scope.name);
+    $scope.personName = $scope.name;
+    console.log($scope.personName)
+    $location.url('/race')
   }
- 
 
   $scope.emitShake = function(data) {
     return $scope.socket.emit('shake', data);
   };
 
-
   $scope.handleDeviceAccelChange = function(event) {
     event.preventDefault();
 
-
-    // $scope.totalAcceleration = event.acceleration.x +
-    //   event.acceleration.y +
-    //   event.acceleration.z;
+    $scope.totalAcceleration = event.acceleration.x +
+      event.acceleration.y +
+      event.acceleration.z;
 
     if($scope.totalAcceleration > 10) {
       $scope.emitShake(); // name passed into Emit Shake here?
       $scope.newsFromSocket = $scope.totalAcceleration;
+      $scope.shakes++;
     }
     // $scope.accelEventData = event.acceleration;
     $scope.$apply(); 
   };
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
+
 }).controller('PlayGridController', function($scope) {
   // players are hardcoded for now, eventually this will be aggregated from somewhere else
   // so it's sort of a stub that will be adjusted later
   $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
   $scope.title = "SHAKE RACE!!!";
-
+  $scope.socket = io();
   $scope.socket.on('moveracer', function (data) {
     console.log("MOVERACER RECEIVED.  LOG DATA: ", data);
     // so $scope.players can be a {} with a property of uniqueIds
