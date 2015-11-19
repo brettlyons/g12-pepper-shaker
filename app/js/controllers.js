@@ -8,16 +8,18 @@ app.controller('PhoneController', function($scope) {
     return socket.emit('shake', data);
   };
 
-  $scope.handleDeviceAccelChange = function(e) {
+
+  $scope.handleDeviceAccelChange = function(event) {
     event.preventDefault();
 
 
     $scope.totalAcceleration = event.acceleration.x +
       event.acceleration.y +
       event.acceleration.z;
-    
-    if($scope.totalAcceleration > 50) {
-      $scope.emitShake({shakeIncrement: 1});
+
+    if($scope.totalAcceleration > 10) {
+      $scope.emitShake(); // name passed into Emit Shake here?
+      $scope.newsFromSocket = $scope.totalAcceleration;
     }
     // $scope.accelEventData = event.acceleration;
     $scope.$apply(); 
@@ -27,11 +29,16 @@ app.controller('PhoneController', function($scope) {
 }).controller('PlayGridController', function($scope) {
   // players are hardcoded for now, eventually this will be aggregated from somewhere else
   // so it's sort of a stub that will be adjusted later
-  // $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
+  $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
 
   $scope.socket.on('moveracer', function (data) {
+    console.log("MOVERACER RECEIVED.  LOG DATA: ", data);
+    // so $scope.players can be a {} with a property of uniqueIds
+    // $scope.players[data.uniqueId].name = data.name; // WHERE IS DATA.NAME!?? 
+    $scope.players[data.uniqueId].shakes = data.shakes;
     // change the 1 object in the array that matches (data)
-    $scope.players = [{name: "Tester Testington", score: data.shakes, userId: data.userId }]; // test data
+
+    // $scope.players = [{name: "Tester Testington", score: data.shakes}]; // DEBUG DEBUG DEBUG
     $scope.apply();
   });
   
