@@ -18,8 +18,6 @@ app.set('view engine', 'jade');
 
 
 app.io.on('connection', function (socket) {
-  console.log('SOCKET CONNECTED.  Socket Info:\n', socket);
-  console.log('END SOCKET INFO');
   var shakes = 0;
   socket.on('shake', function (data) {
     // console.log("SERVER DATA: " + data);
@@ -28,9 +26,11 @@ app.io.on('connection', function (socket) {
       userId: socket.id,
       shakes: shakes
     });
-    
+    app.io.sockets.emit('moveracer', {
+      userId: socket.id,
+      shakes: shakes
+    });
   });
-  
 
 });
 // HACK ALERT
