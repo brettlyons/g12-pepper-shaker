@@ -9,6 +9,7 @@ app.config(function($routeProvider, $locationProvider) {
     .when('/playgrid', {
       templateUrl: 'partials/playGrid.html',
       controller: 'PlayGridController'
-    });
+    })
+    .when('')
   $locationProvider.html5Mode(true);
 });
