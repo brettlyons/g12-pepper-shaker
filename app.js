@@ -20,25 +20,25 @@ app.set('view engine', 'jade');
 app.io.on('connection', function (socket) {
   console.log('SOCKET CONNECTED');
 
-  // socket.emit('news', { hello: 'world' });
+  socket.emit('news', { hello: 'world' });
 
-  // socket.on('my other event', function (shakeData) {
-  //   console.log(socket.id);
-  //   console.log('A shake happened! Here\'s the data:', shakeData);
-  // });
+  socket.on('my other event', function (shakeData) {
+    console.log(socket.id);
+    console.log('Shake data:', shakeData);
+  });
 
   socket.on('shake', function (data) {
     console.log("OTHER DATA", data);
-    console.log(socket.id);
+    // console.log(socket.id);
+    });
     socket.emit('moveracer', {
       // define data model
-    });
   });
 });
 // HACK ALERT
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

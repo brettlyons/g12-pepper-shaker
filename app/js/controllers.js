@@ -1,21 +1,42 @@
 const ACCELERATION_REPORT_MIN = 12;
 
 app.controller('PhoneController', function($scope) {
-  $scope.greeting = 'Hello World Of Physics!';
+  $scope.greeting = 'Dashboard';
   const socket = io();
 
-  // socket.on('news', function (data) {
-  //   console.log(data);
-  //   $scope.newsFromSocket = data;
-  //   socket.emit('my other event', { my: 'data' });
-  //   $scope.$apply();
-  // });
+
+  $scope.testxShakes = 0;
+  $scope.testyShakes = 0;
+  $scope.testzShakes = 0;
+  $scope.testEachShakeAmount = 0;
+  $scope.testTotalShakes = 0;
+  $scope.testSendData = function() {
+    var randX = Math.floor(Math.random() * (3-1+1)) + 1;
+    var randY = Math.floor(Math.random() * (3-1+1)) + 1;
+    var randZ = Math.floor(Math.random() * (3-1+1)) + 1;
+    var randShake = Math.floor(Math.random() * (20-1+1)) + 1;
+
+    $scope.testxShakes = randX;
+    $scope.testyShakes = randY;
+    $scope.testzShakes = randZ;
+    $scope.testEachShakeAmount = randShake;
+
+    $scope.testTotalShakes += randShake; 
+
+  };
+
+  socket.on('news', function (data) {
+    console.log(data);
+    $scope.newsFromSocket = data;
+    socket.emit('my other event', { my: 'data' });
+    $scope.$apply();
+  });
   
   $scope.xShakes = 0; // used to "count shakes" in game logic later
   $scope.yShakes = 0;
   $scope.zShakes = 0;
   $scope.emitShake = function(data) {
-    return socket.emit('shake', data);
+    return socket.emit('my other event', data);
   };
 
   $scope.handleDeviceAccelChange = function(event) {
