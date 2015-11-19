@@ -10,7 +10,7 @@ app.controller('PhoneController', function($scope) {
   //   socket.emit('my other event', { my: 'data' });
   //   $scope.$apply();
   // });
-  
+
   $scope.xShakes = 0; // used to "count shakes" in game logic later
   $scope.yShakes = 0;
   $scope.zShakes = 0;
