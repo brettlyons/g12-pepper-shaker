@@ -20,8 +20,7 @@ app.controller('PhoneController', function($scope) {
       event.acceleration.z;
 
     if($scope.totalAcceleration > 10) {
-      $scope.emitShake(); // name passed into Emit Shake here?
-      $scope.newsFromSocket = $scope.totalAcceleration;
+      $scope.emitShake(); 
     }
     // $scope.accelEventData = event.acceleration;
     $scope.$apply(); 
@@ -29,14 +28,10 @@ app.controller('PhoneController', function($scope) {
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
   $scope.socket.on('moveracer', function (data) {
-    console.log("MOVERACER RECEIVED.  LOG DATA: ", data);
-    // so $scope.players can be a {} with a property of uniqueIds
-    // $scope.players[data.uniqueId].name = data.name; // WHERE IS DATA.NAME!?? 
-    $scope.players[data.uniqueId].shakes = data.shakes;
-    // change the 1 object in the array that matches (data)
-
-    // $scope.players = [{name: "Tester Testington", score: data.shakes}]; // DEBUG DEBUG DEBUG
-    $scope.apply();
+    console.log("MOVERACER RECEIVED ON RACER ROUTE.  LOG DATA: ", data.shakes);
+    $scope.apply(function() {
+      $scope.shakeCount = data.shakes;
+    });
   });
 
 }).controller('PlayGridController', function($scope) {
