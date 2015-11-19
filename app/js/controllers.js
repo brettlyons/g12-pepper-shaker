@@ -8,6 +8,16 @@ app.controller('PhoneController', function($scope) {
   // $scope.xShakes = 0; // used to "count shakes" in game logic later
   // $scope.yShakes = 0;
   // $scope.zShakes = 0;
+
+
+  // socket.on('news', function (data) {
+  //   console.log(data);
+  //   $scope.newsFromSocket = data;
+  //   socket.emit('my other event', { my: 'data' });
+  //   $scope.$apply();
+  // });
+
+
   $scope.emitShake = function(data) {
     return socket.emit('shake', data);
   };
