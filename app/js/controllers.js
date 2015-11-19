@@ -22,11 +22,11 @@ app.controller('PhoneController', function($scope) {
     return socket.emit('shake', data);
   };
 
-  function changeInnerHTML(data) {
-   var title = document.getElementById('title');
-   console.log(data);
-   title.innerHTML = data + 'Shakes';
-   }
+  // function changeInnerHTML(data) {
+  //  var title = document.getElementById('title');
+  //  console.log(data);
+  //  title.innerHTML = data + 'Shakes';
+  //  }
 
   var shakes = 0;
   socket.on('moveracer', function (data) {
@@ -39,53 +39,24 @@ app.controller('PhoneController', function($scope) {
   });
 
 
-  $scope.handleDeviceAccelChange = function(event) {
+  $scope.handleDeviceAccelChange = function(e) {
     event.preventDefault();
-    // if (event.acceleration.x > ACCELERATION_REPORT_MIN) {
-    //   $scope.xAcceleration = event.acceleration.x;
-    //   $scope.xShakes++;
-    //   $scope.emitShake({
-    //     xShakes: $scope.xShakes,
-    //     yShakes: $scope.yShakes,
-    //     zShakes: $scope.zShakes
-    //   });
-    // }
-    // if (event.acceleration.y > ACCELERATION_REPORT_MIN) {
-    //   $scope.yAcceleration = event.acceleration.y;
-    //   $scope.yShakes++;
-    //   $scope.emitShake({
-    //     xShakes: $scope.xShakes,
-    //     yShakes: $scope.yShakes,
-    //     zShakes: $scope.zShakes
-    //   });
-    // }
-    // if (event.acceleration.z > ACCELERATION_REPORT_MIN) {
-    //   $scope.zAcceleration = event.acceleration.z;
-    //   $scope.zShakes++;
-    //   $scope.emitShake({
-    //     xShakes: $scope.xShakes,
-    //     yShakes: $scope.yShakes,
-    //     zShakes: $scope.zShakes
-    //   });
-    // }
+    var totalAcceleration = event.acceleration.x + event.acceleration.y + event.acceleration.z;
 
-    var $scope.totalAcceleration = event.acceleration.x + event.acceleration.y + event.acceleration.z;
-
-    if (totalAcceleration > 150) {
+    if (totalAcceleration > 10) {
           data = 1;
     } else {
       data = 0;
     }
-
     $scope.emitShake(data)
     // $scope.accelEventData = event.acceleration;
     $scope.$apply();
   };
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
+
 }).controller('PlayGridController', function($scope) {
   // players are hardcoded for now, eventually this will be aggregated from somewhere else
   // so it's sort of a stub that will be adjusted later
   $scope.title = "SHAKE RACE!!!";
-  $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
+  $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}];
 });
-
