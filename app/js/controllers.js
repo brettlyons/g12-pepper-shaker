@@ -1,8 +1,8 @@
 const ACCELERATION_REPORT_MIN = 12;
-
+$scope.socket = io();
 app.controller('PhoneController', function($scope) {
   $scope.greeting = 'Hello World Of Physics!';
-  const socket = io();
+ 
 
   $scope.emitShake = function(data) {
     return socket.emit('shake', data);
@@ -29,7 +29,7 @@ app.controller('PhoneController', function($scope) {
   // so it's sort of a stub that will be adjusted later
   // $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
 
-  socket.on('moveracer', function (data) {
+  $scope.socket.on('moveracer', function (data) {
     // change the 1 object in the array that matches (data)
     $scope.players = [{name: "Tester Testington", score: data.shakes, userId: data.userId }]; // test data
     $scope.apply();
