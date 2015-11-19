@@ -18,21 +18,17 @@ app.set('view engine', 'jade');
 
 
 app.io.on('connection', function (socket) {
-  console.log('SOCKET CONNECTED');
-
-  socket.emit('news', { hello: 'world' });
-
-  socket.on('my other event', function (shakeData) {
-    console.log(socket.id);
-    console.log('Shake data:', shakeData);
-  });
-
+  console.log('SOCKET CONNECTED.  Socket Info:\n', socket);
+  console.log('END SOCKET INFO');
+  var shakes = 0;
   socket.on('shake', function (data) {
-    console.log("OTHER DATA", data);
-    // console.log(socket.id);
+    // console.log("SERVER DATA: " + data);
+    shakes++;
+    socket.broadcast.emit('moveracer', {
+      userId: socket.id,
+      shakes: shakes
     });
-    socket.emit('moveracer', {
-      // define data model
+    
   });
 });
 // HACK ALERT
