@@ -30,6 +30,7 @@ app.io.on('connection', function (socket) {
       shakes: shakes
     });
   });
+
 });
 // HACK ALERT
 
