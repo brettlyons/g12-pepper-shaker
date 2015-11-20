@@ -27,7 +27,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.addName = function() {
 
     if ($scope.name.toLowerCase().split(' ').join('').indexOf('dickbutt') >= 0) {
-      $scope.name = 'Fruit Cake';
+      $scope.name = 'Prissy spice';
       $location.url('/race');
     } else if ($scope.name.toLowerCase().split(' ').join('').indexOf('cena') >= 0 || $scope.name == '') {
       $scope.name = 'Posh Spice';
