@@ -1,29 +1,10 @@
-  <h1>Home page</h1>
-  <a href="/playgrid"> Playgrid </a>
+`  <h1>Shake Race <a href="/playgrid">View Dashboard</a></h1>
   <!-- We might split the below out into a separate route based on wether it's a phone or not -->
   <div class="container">
     <div class="row">
-          <h1>{{greeting}}
-          </h1>
-          <p></p>
-          <div>X shakes: {{testxShakes}}
-          </div>
-          <p></p>
-          <div>Y shakes: {{testyShakes}}
-          </div>
-          <p></p>
-          <div>Z shakes: {{testzShakes}}
-          </div>
-          <br>
-          <div>Each Shake Amount: {{testEachShakeAmount}}</div>
-          <br>
-          <br>
-          <h2 class="lead"> Total: {{testTotalShakes}}
-          <br>
-          <br>
-          <button class="btn btn-success btn-md" ng-click="testSendData()">Faux Shake</button>
-        <!-- add content here -->
-        </div>
+      <div class="col-md-12">
+         <p>Enter Name: <input ng-model='name'></p>
+         <p><input type='submit' value='Enter Race'></p>
       </div>
     </div>
   </div>
