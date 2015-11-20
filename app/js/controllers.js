@@ -5,11 +5,30 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.shakes = 0;
   const maracas = new Audio('../../Maracas2.mp3');
   maracas.play();
+  $scope.viewDashboard = false;
+  $scope.showDash = function() {
+    $scope.viewDashboard = (!$scope.viewDashboard ) ? true : false;
+  }
+
+  $scope.validatePassword = function() {
+    if ($scope.password !== '********') {
+      return $location.url('/')
+    } else {
+      return $location.url('/playgrid')
+    }
+  }
 
   $scope.addName = function() {
-    $rootScope.personName = $scope.name;
-    console.log($rootScope.name);
-    $location.url('/race')
+    if ($scope.name.toLowerCase().split(' ').join('').indexOf('dickbutt') >= 0) {
+      $rootScope.personName = 'Fruit Cake';
+      $location.url('/race')
+    } else if ($scope.name.toLowerCase().split(' ').join('').indexOf('johncena') >= 0) {
+      $rootScope.personName = 'Posh Spice';
+      $location.url('/race')
+    } else {
+      $rootScope.personName = $scope.name;
+      $location.url('/race')
+    }
   }
 
   $scope.emitShake = function(data) {
@@ -37,7 +56,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   };
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
-}).controller('PlayGridController', function($scope) {
+}).controller('PlayGridController', function($scope, $rootScope) {
   $scope.socket = io();
   // players are hardcoded for now, eventually this will be aggregated from somewhere else
   // so it's sort of a stub that will be adjusted later
@@ -55,5 +74,13 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     console.log($scope.players);
   });
   
+  $scope.title = 'SHAKE RACE!!!';
 
+  if (!$scope.players) { $scope.players = {} }
+
+  $scope.socket.on('moveracer', function(data) {
+    // console.log("SOCKET DATA ON RACE GRID", data)
+    $scope.players[data.userId] =  {name: data.name, score: data.shakes};
+    $scope.$apply();
+  });
 });
