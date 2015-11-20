@@ -44,6 +44,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   if (!$scope.players) { $scope.players = {} }
 
   $scope.socket.on('moveracer', function(data) {
+    // console.log("SOCKET DATA ON RACE GRID", data)
     $scope.players[data.userId] =  {name: data.name, score: data.shakes};
     $scope.$apply();
   });
