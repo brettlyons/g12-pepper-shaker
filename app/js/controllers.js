@@ -3,9 +3,11 @@ const ACCELERATION_REPORT_MIN = 12;
 app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.socket = io();
   $scope.shakes = 0;
+  const maracas = new Audio('../../Maracas2.mp3');
+  maracas.play();
 
   $scope.addName = function() {
-    $rootScope.name = $scope.name;
+    $rootScope.personName = $scope.name;
     console.log($rootScope.name);
     $location.url('/race')
   }
@@ -23,10 +25,11 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
 
     if($scope.totalAcceleration > 10) {
       $scope.shakes++;
+      maracas.play();
       $scope.emitShake({
-        name: $rootScope.name,
+        name: $rootScope.personName,
         shakes: $scope.shakes
-      }); 
+      });
       $scope.newsFromSocket = $scope.totalAcceleration;
     }
     // $scope.accelEventData = event.acceleration;
@@ -42,13 +45,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.title = "SHAKE RACE!!!";
   $scope.socket = io();
   $scope.socket.on('moveracer', function (data) {
-    console.log("MOVERACER RECEIVED.  LOG DATA: ", data);
-    // so $scope.players can be a {} with a property of uniqueIds
-    // $scope.players[data.uniqueId].name = data.name; // WHERE IS DATA.NAME!??
-    $scope.players[data.uniqueId].shakes = data.shakes;
-    // change the 1 object in the array that matches (data)
-
-    // $scope.players = [{name: "Tester Testington", score: data.shakes}]; // DEBUG DEBUG DEBUG
+    console.log("MOVERACER RECEIVED IN GRID CONTROLLER.  LOG DATA: ", data);
     $scope.apply();
   });
 

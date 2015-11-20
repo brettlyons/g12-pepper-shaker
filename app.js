@@ -18,9 +18,10 @@ app.set('view engine', 'jade');
 
 
 app.io.on('connection', function (socket) {
-  var shakes = 0;
+//  var shakes = 0;
   socket.on('shake', function (data) {
     //shakes++;
+    console.log("SERVER SIDE DATA", data);
     socket.broadcast.emit('moveracer', {
       userId: socket.id,
       shakes: data.shakes,
