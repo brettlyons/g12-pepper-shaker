@@ -3,6 +3,7 @@
 
 <div class='col-md-12 well'>
   <div ng-repeat='player in players' class='col-md-1'>
-  <div style='height: {{ player.score }}px; background-color: red' >{{ player.name }}</div>
+  <div style='height: {{ player.shakes}}px; background-color: red' >{{ player.userId }}</div>
+  <div class="lead">Score: {{player.shakes}}</div>
   </div>
 </div>

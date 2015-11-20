@@ -42,16 +42,18 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   // players are hardcoded for now, eventually this will be aggregated from somewhere else
   // so it's sort of a stub that will be adjusted later
   // $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
-  $scope.players ={}
-  $scope.players['123'] = { name: 'Bob', score: 7};
-  $scope.players['gerbils'] = { name: 'Fred', score: 2 };
+  $scope.players =[];
   $scope.title = "SHAKE RACE!!!";
   $scope.socket = io();
   $scope.socket.on('moveracer', function (data) {
-    console.log("MOVERACER RECEIVED IN GRID CONTROLLER.  LOG DATA: ", data);
-    
-    $scope.apply();
+    if ($scope.players.indexOf(data.userId) == -1) {
+      $scope.players.push(data.userId);
+      $scope.players.push(data.shakes)
+    } else if ($scope.players.indexOf(data.userId) > -1) {
+      $scope.players.splice($scope.players.indexOf(data.userId) + 1, 1, data.shakes)
+    }
+    console.log($scope.players);
   });
-
+  
 
 });
