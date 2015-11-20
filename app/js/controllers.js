@@ -23,7 +23,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
       event.acceleration.y +
       event.acceleration.z;
 
-    if($scope.totalAcceleration > 10) {
+    if($scope.totalAcceleration > 20) {
       $scope.shakes++;
       maracas.play();
       $scope.emitShake({
