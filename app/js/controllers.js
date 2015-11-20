@@ -27,17 +27,14 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.addName = function() {
 
     if ($scope.name.toLowerCase().split(' ').join('').indexOf('dickbutt') >= 0) {
-      $rootScope.personName = 'Fruit Cake';
-      $location.url('/race')
+      $scope.name = 'Fruit Cake';
+      $location.url('/race');
     } else if ($scope.name.toLowerCase().split(' ').join('').indexOf('cena') >= 0 || $scope.name == '') {
-      $rootScope.personName = 'Posh Spice';
-      $location.url('/race')
-    } else {
-      $rootScope.personName = $scope.name;
-      $location.url('/race')
+      $scope.name = 'Posh Spice';
+      $location.url('/race');
     }
+    
     $rootScope.personName = $scope.name;
-
     $location.url('/race')
 
   }
@@ -70,23 +67,17 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   };
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
-}).controller('PlayGridController', function($scope, $rootScope) {
-  $scope.socket = io();
-  // players are hardcoded for now, eventually this will be aggregated from somewhere else
-  // so it's sort of a stub that will be adjusted later
-  // $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
-  
   $scope.socket.on('reset', function (data) {
     $scope.resetShakes();
   });
   
-}).controller('PlayGridController', function($scope) {
-
+}).controller('PlayGridController', function($scope, $rootScope) {
   $scope.title = 'SHAKE RACE!!!';
   $scope.socket = io();
 
   if (!$scope.players) { $scope.players = {}; }
   $scope.activateSocket = function () {
+    console.log('start button hit');
     $scope.socket.on('moveracer', $scope.racerMover);
     $scope.socket.emit('reset', {});
   }
@@ -94,14 +85,15 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     $scope.socket.emit('reset', {});
     $scope.socket.removeAllListeners('moveracer');
   }
+  
   $scope.racerMover = function (data) {
     $scope.images = ["/images/pony1.png",
-                  "/images/pony2.png",
-                  "/images/pony3.png"]
-    $scope.randomNum = Math.floor(Math.random() * (images.length - 1) + 0)
-    $scope.image = images[randomNum];
+                    "/images/pony2.png",
+                     "/images/pony3.png"];
+    $scope.randomNum = Math.floor(Math.random() * ($scope.images.length - 1) + 0);
+    $scope.image = $scope.images[$scope.randomNum];
 
-    $scope.players[data.userId] =  {name: data.name, score: data.shakes};
+    $scope.players[data.userId] =  {name: data.name, score: data.shakes, image: $scope.image};
 
     $scope.$apply();
 
@@ -109,7 +101,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
       $scope.winner = $scope.players[data.userId].name;
       $scope.deactivateSocket();
       $scope.$apply();
-      $scope.socket.broadcast.emit('reset');
+      $scope.socket.emit('reset');
     }
   };
 });
