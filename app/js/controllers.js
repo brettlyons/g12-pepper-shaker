@@ -3,6 +3,8 @@ const ACCELERATION_REPORT_MIN = 12;
 app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.socket = io();
   $scope.shakes = 0;
+  const maracas = new Audio('../../Maracas2.mp3');
+  maracas.play();
 
   $scope.addName = function() {
     $rootScope.personName = $scope.name;
@@ -52,5 +54,3 @@ if (!$scope.players) { $scope.players = {} }
 
 
   });
-
-

@@ -18,7 +18,6 @@ app.set('view engine', 'jade');
 
 
 app.io.on('connection', function (socket) {
-  var shakes = 0;
   socket.on('shake', function (data) {
     // console.log("SERVER DATA: " + data);
     socket.broadcast.emit('moveracer', {
@@ -29,7 +28,6 @@ app.io.on('connection', function (socket) {
   });
 
 });
-// HACK ALERT
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -37,8 +35,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'app')));
+
+app.use(express.static(path.join(__dirname, '/app')));
 
 
 app.use('/', routes);
