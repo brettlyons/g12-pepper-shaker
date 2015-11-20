@@ -1,11 +1,11 @@
 const ACCELERATION_REPORT_MIN = 12;
 
-app.controller('PhoneController', function($scope, $location) {
+app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.socket = io();
   $scope.shakes = 0;
 
   $scope.addName = function() {
-    $scope.personName = $scope.name;
+    $rootScope.personName = $scope.name;
     console.log($scope.personName)
     $location.url('/race')
   }
@@ -14,6 +14,7 @@ app.controller('PhoneController', function($scope, $location) {
     return $scope.socket.emit('shake', data);
   };
 
+
   $scope.handleDeviceAccelChange = function(event) {
     event.preventDefault();
 
@@ -21,33 +22,35 @@ app.controller('PhoneController', function($scope, $location) {
       event.acceleration.y +
       event.acceleration.z;
 
-    if($scope.totalAcceleration > 10) {
-      $scope.emitShake(); // name passed into Emit Shake here?
-      $scope.newsFromSocket = $scope.totalAcceleration;
+   if($scope.totalAcceleration > 20) {
       $scope.shakes++;
+      $scope.emitShake({
+        name: $rootScope.personName,
+        shakes: $scope.shakes
+      }); 
+      $scope.newsFromSocket = $scope.totalAcceleration;
     }
-    // $scope.accelEventData = event.acceleration;
+
     $scope.$apply(); 
   };
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
-}).controller('PlayGridController', function($scope) {
-  $scope.socket = io();
-  // players are hardcoded for now, eventually this will be aggregated from somewhere else
-  // so it's sort of a stub that will be adjusted later
-  $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
-  $scope.title = "SHAKE RACE!!!";
-  $scope.socket = io();
-  $scope.socket.on('moveracer', function (data) {
-    console.log("MOVERACER RECEIVED.  LOG DATA: ", data);
-    // so $scope.players can be a {} with a property of uniqueIds
-    // $scope.players[data.uniqueId].name = data.name; // WHERE IS DATA.NAME!?? 
-    $scope.players[data.uniqueId].shakes = data.shakes;
-    // change the 1 object in the array that matches (data)
 
-    // $scope.players = [{name: "Tester Testington", score: data.shakes}]; // DEBUG DEBUG DEBUG
-    $scope.apply();
+}).controller('PlayGridController', function($scope, $rootScope) {
+  $scope.socket = io();
+if (!$scope.players) { $scope.players = {} }
+  $scope.socket.on('moveracer', function(data) {
+      var images = ["/images/pony1.png",
+                  "/images/pony2.png",
+                  "/images/pony3.png"]
+     var randomNum = Math.floor(Math.random() * (images.length - 1) + 0)
+     $scope.image = images[randomNum];
+    // console.log("SOCKET DATA ON RACE GRID", data)
+    $scope.players[data.userId] =  {name: data.name, score: data.shakes, image: $scope.image};
+    $scope.$apply();
   });
-  
 
-});
+
+  });
+
+

@@ -1,10 +1,10 @@
-  <h1>Shake Race <a href="/playgrid">View Dashboard</a> <a href='/race'>Go to Race</a></h1>
+  <h1>Shake Race <a href="/playgrid">View Dashboard</a>
   <!-- We might split the below out into a separate route based on wether it's a phone or not -->
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <form ng-submit='addName()'>
-         <p>Enter Name: <input ng-model='name'></p>
+         <p>Enter Name: <input ng-model='name' required></p>
          <p><input type='submit' value='Enter Race'></p>
        </form>
       </div>
