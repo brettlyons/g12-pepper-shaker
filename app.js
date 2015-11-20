@@ -25,7 +25,9 @@ app.io.on('connection', function (socket) {
       name: data.name
     });
   });
-
+  socket.on('reset', function(data) {
+    socket.broadcast.emit('reset');
+  });
 });
 
 // uncomment after placing your favicon in /public

@@ -3,12 +3,15 @@ const ACCELERATION_REPORT_MIN = 12;
 app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.socket = io();
   $scope.shakes = 0;
-  const maracas = new Audio('../../Maracas2.mp3');
-  maracas.play();
+  $scope.maracas = new Audio('../../Maracas2.mp3');
+  //maracas.play();
 
+  $scope.resetShakes = function () {
+    $scope.shakes = 0;
+  }
+  
   $scope.addName = function() {
     $rootScope.personName = $scope.name;
-    console.log($rootScope.name);
     $location.url('/race')
   }
 
@@ -25,7 +28,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
 
     if($scope.totalAcceleration > 20) {
       $scope.shakes++;
-      maracas.play();
+      $scope.maracas.play();
       $scope.emitShake({
         name: $rootScope.personName,
         shakes: $scope.shakes
@@ -37,15 +40,31 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   };
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
-}).controller('PlayGridController', function($scope, $rootScope) {
-  $scope.socket = io();
+  $scope.socket.on('reset', function (data) {
+    $scope.resetShakes();
+  });
+  
+}).controller('PlayGridController', function($scope) {
   $scope.title = 'SHAKE RACE!!!';
+  $scope.socket = io();
 
-  if (!$scope.players) { $scope.players = {} }
-
-  $scope.socket.on('moveracer', function(data) {
-    // console.log("SOCKET DATA ON RACE GRID", data)
+  if (!$scope.players) { $scope.players = {}; }
+  $scope.activateSocket = function () {
+    $scope.socket.on('moveracer', $scope.racerMover);
+    $scope.socket.emit('reset', {});
+  }
+  $scope.deactivateSocket = function () {
+    $scope.socket.emit('reset', {});
+    $scope.socket.removeAllListeners('moveracer');
+  }
+  $scope.racerMover = function (data) {
     $scope.players[data.userId] =  {name: data.name, score: data.shakes};
     $scope.$apply();
-  });
+    if($scope.players[data.userId].score > 1000) {
+      $scope.winner = $scope.players[data.userId].name;
+      $scope.deactivateSocket();
+      $scope.$apply();
+      $scope.socket.broadcast.emit('reset');
+    }
+  };
 });

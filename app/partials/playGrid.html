@@ -2,9 +2,17 @@
 <div class="lead">{{title}}</div>
 
 <div class='col-md-12 well'>
-  <div ng-repeat='player in players'>
-    <div class='col-md-1'>
-      <div style='height: {{ player.score}}px; background-color: red' >{{ player.name }}</div>
+  <div ng-repeat='player in players' class="row">
+    <div style='height: {{ player.score}}px; background-color: red' >{{ player.name }}</div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="jumbotron" ng-show={{winner}}>
+      {{winner}}
     </div>
   </div>
 </div>
+<button class="btn btn-default" ng-click="activateSocket()">Start game</button>
+<button class="btn btn-default" ng-click="deactivateSocket()">End game</button>
+  
