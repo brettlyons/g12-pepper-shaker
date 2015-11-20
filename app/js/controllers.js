@@ -77,14 +77,16 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
 
   if (!$scope.players) { $scope.players = {}; }
   $scope.activateSocket = function () {
-    console.log('start button hit');
+    $scope.bugle = new Audio('http://static1.grsites.com/archive/sounds/recreation/recreation002.mp3');
+    $scope.bugle.play();
     $scope.socket.on('moveracer', $scope.racerMover);
     $scope.socket.emit('reset', {});
-  }
+  };
+  
   $scope.deactivateSocket = function () {
     $scope.socket.emit('reset', {});
     $scope.socket.removeAllListeners('moveracer');
-  }
+  };
   
   $scope.racerMover = function (data) {
     $scope.images = ["/images/pony1.png",
