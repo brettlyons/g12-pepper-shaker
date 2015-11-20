@@ -37,21 +37,14 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   };
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
-}).controller('PlayGridController', function($scope) {
+}).controller('PlayGridController', function($scope, $rootScope) {
   $scope.socket = io();
-  // players are hardcoded for now, eventually this will be aggregated from somewhere else
-  // so it's sort of a stub that will be adjusted later
-  // $scope.players = [{name: 'Bob', score: 5}, {name: 'Fred', score: 7}, {name: 'Jenny', score: 4}]
-  $scope.players ={}
-  $scope.players['123'] = { name: 'Bob', score: 7};
-  $scope.players['gerbils'] = { name: 'Fred', score: 2 };
-  $scope.title = "SHAKE RACE!!!";
-  $scope.socket = io();
-  $scope.socket.on('moveracer', function (data) {
-    console.log("MOVERACER RECEIVED IN GRID CONTROLLER.  LOG DATA: ", data);
-    
-    $scope.apply();
+  $scope.title = 'SHAKE RACE!!!';
+
+  if (!$scope.players) { $scope.players = {} }
+
+  $scope.socket.on('moveracer', function(data) {
+    $scope.players[data.userId] =  {name: data.name, score: data.shakes};
+    $scope.$apply();
   });
-
-
 });

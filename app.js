@@ -18,10 +18,7 @@ app.set('view engine', 'jade');
 
 
 app.io.on('connection', function (socket) {
-//  var shakes = 0;
   socket.on('shake', function (data) {
-    //shakes++;
-    console.log("SERVER SIDE DATA", data);
     socket.broadcast.emit('moveracer', {
       userId: socket.id,
       shakes: data.shakes,
@@ -30,7 +27,6 @@ app.io.on('connection', function (socket) {
   });
 
 });
-// HACK ALERT
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
