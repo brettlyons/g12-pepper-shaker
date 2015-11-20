@@ -1,5 +1,5 @@
 const ACCELERATION_REPORT_MIN = 12;
-
+const SHAKES_TO_WIN = 500;
 app.controller('PhoneController', function($scope, $location, $rootScope) {
   $scope.socket = io();
   $scope.shakes = 0;
@@ -97,7 +97,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
 
     $scope.$apply();
 
-    if($scope.players[data.userId].score > 1000) {
+    if($scope.players[data.userId].score > SHAKES_TO_WIN ) {
       $scope.winner = $scope.players[data.userId].name;
       $scope.deactivateSocket();
       $scope.$apply();
