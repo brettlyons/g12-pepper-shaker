@@ -12,12 +12,17 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   
   $scope.addName = function() {
     $rootScope.personName = $scope.name;
+<<<<<<< HEAD
+=======
+    console.log($scope.personName)
+>>>>>>> 16cf55abacd579aa0cc1378521eb8e02b2c8afe6
     $location.url('/race')
   }
 
   $scope.emitShake = function(data) {
     return $scope.socket.emit('shake', data);
   };
+
 
   $scope.handleDeviceAccelChange = function(event) {
     event.preventDefault();
@@ -26,17 +31,20 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
       event.acceleration.y +
       event.acceleration.z;
 
-    if($scope.totalAcceleration > 20) {
+   if($scope.totalAcceleration > 20) {
       $scope.shakes++;
+<<<<<<< HEAD
       $scope.maracas.play();
+=======
+>>>>>>> 16cf55abacd579aa0cc1378521eb8e02b2c8afe6
       $scope.emitShake({
         name: $rootScope.personName,
         shakes: $scope.shakes
-      });
+      }); 
       $scope.newsFromSocket = $scope.totalAcceleration;
     }
-    // $scope.accelEventData = event.acceleration;
-    $scope.$apply();
+
+    $scope.$apply(); 
   };
   window.addEventListener('devicemotion', $scope.handleDeviceAccelChange, true);
 
@@ -58,8 +66,16 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     $scope.socket.removeAllListeners('moveracer');
   }
   $scope.racerMover = function (data) {
+    $scope.images = ["/images/pony1.png",
+                  "/images/pony2.png",
+                  "/images/pony3.png"]
+    $scope.randomNum = Math.floor(Math.random() * (images.length - 1) + 0)
+    $scope.image = images[randomNum];
+
     $scope.players[data.userId] =  {name: data.name, score: data.shakes};
+
     $scope.$apply();
+
     if($scope.players[data.userId].score > 1000) {
       $scope.winner = $scope.players[data.userId].name;
       $scope.deactivateSocket();
