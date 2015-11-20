@@ -18,17 +18,15 @@ app.set('view engine', 'jade');
 
 
 app.io.on('connection', function (socket) {
-  console.log('SOCKET CONNECTED.  Socket Info:\n', socket);
-  console.log('END SOCKET INFO');
-  var shakes = 0;
+//  var shakes = 0;
   socket.on('shake', function (data) {
-    // console.log("SERVER DATA: " + data);
-    shakes++;
+    //shakes++;
+    console.log("SERVER SIDE DATA", data);
     socket.broadcast.emit('moveracer', {
       userId: socket.id,
-      shakes: shakes
+      shakes: data.shakes,
+      name: data.name
     });
-    
   });
 });
 // HACK ALERT
@@ -39,8 +37,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'app')));
+
+app.use(express.static(path.join(__dirname, '/app')));
 
 
 app.use('/', routes);

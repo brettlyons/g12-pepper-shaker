@@ -1,11 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* CATCHALL */
+// CATCHALL
 router.get('*', function(req, res, next) {
-  res.sendFile('index.html', {
-    root: __dirname + '/../public/'
-  })
+  res.redirect('/');
 });
 
 module.exports = router;
