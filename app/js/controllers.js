@@ -2,7 +2,7 @@ const ACCELERATION_REPORT_MIN = 12;
 const SHAKES_TO_WIN = 100;
 
 app.controller('PhoneController', function($scope, $location, $rootScope) {
-  const maracas = new Audio('../../Maracas2.mp3');
+  //const maracas = new Audio('../../Maracas2.mp3');
   $scope.socket = io();
   $scope.shakes = 0;
   $scope.viewDashboard = false;
@@ -18,7 +18,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     }
   };
 
-  $rootScope.maracas.play();
+  //$rootScope.maracas.play();
 
   $scope.resetShakes = function() {
     $scope.shakes = 0;
@@ -26,22 +26,13 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
 
   $scope.addName = function() {
 
-    if ($scope.name
-        .toLowerCase()
-        .split(' ')
-        .join('')
-        .indexOf('dickbutt') >= 0) {
+    if ($scope.name.toLowerCase().split(' ').join('').indexOf('dickbutt') >= 0) {
       $scope.name = 'Prissy spice';
       $location.url('/race');
-    } else if ($scope.name
-               .toLowerCase()
-               .split(' ')
-               .join('')
-               .indexOf('cena') >= 0 || $scope.name == '') {
+    } else if ($scope.name.toLowerCase().split(' ').join('').indexOf('cena') >= 0 || $scope.name == '') {
       $scope.name = 'Posh Spice';
       $location.url('/race');
     }
-
     $rootScope.personName = $scope.name;
     $location.url('/race');
   };
@@ -58,9 +49,10 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
       event.acceleration.z;
 
     if ($scope.totalAcceleration > 20) {
-      $scope.shakes++;
       const maracas = new Audio('../../Maracas2.mp3');
       maracas.play();
+
+      $scope.shakes++;
 
       $scope.emitShake({
         name: $rootScope.personName,
