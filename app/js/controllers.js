@@ -1,5 +1,5 @@
 const ACCELERATION_REPORT_MIN = 12;
-const SHAKES_TO_WIN = 500;
+const SHAKES_TO_WIN = 250;
 const maracas = new Audio('../../Maracas2.mp3');
 
 app.controller('PhoneController', function($scope, $location, $rootScope) {
@@ -97,7 +97,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     $scope.randomNum = Math.floor(Math.random() * ($scope.images.length - 1) + 0);
     $scope.image = $scope.images[$scope.randomNum];
 
-    $scope.players[data.userId] =  {name: data.name, score: data.shakes, image: $scope.image};
+    $scope.players[data.userId] =  {name: data.name, score: (data.shakes * 3), image: $scope.image};
 
     $scope.$apply();
 
