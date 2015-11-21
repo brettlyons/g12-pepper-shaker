@@ -1,6 +1,9 @@
 const ACCELERATION_REPORT_MIN = 12;
 const SHAKES_TO_WIN = 500;
+const maracas = new Audio('../../Maracas2.mp3');
+
 app.controller('PhoneController', function($scope, $location, $rootScope) {
+  if(!maracas) { const maracas = new Audio('../../Maracas2.mp3'); }
   $scope.socket = io();
   $scope.shakes = 0;
   $scope.viewDashboard = false;
@@ -14,15 +17,14 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     } else {
       return $location.url('/playgrid')
     }
-  }
+  };
 
-  $scope.maracas = new Audio('../../Maracas2.mp3');
-  $scope.maracas.play();
+  maracas.play();
 
 
   $scope.resetShakes = function () {
     $scope.shakes = 0;
-  }
+  };
   
   $scope.addName = function() {
 
@@ -54,7 +56,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
    if($scope.totalAcceleration > 20) {
       $scope.shakes++;
 
-      $scope.maracas.play();
+      maracas.play();
 
       $scope.emitShake({
         name: $rootScope.personName,
@@ -77,8 +79,8 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
 
   if (!$scope.players) { $scope.players = {}; }
   $scope.activateSocket = function () {
-    $scope.bugle = new Audio('http://static1.grsites.com/archive/sounds/recreation/recreation002.mp3');
-    $scope.bugle.play();
+    const bugle = new Audio('http://static1.grsites.com/archive/sounds/recreation/recreation002.mp3');
+    bugle.play();
     $scope.socket.on('moveracer', $scope.racerMover);
     $scope.socket.emit('reset', {});
   };
