@@ -94,15 +94,17 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
                   "/images/pony2.png",
                   "/images/pony3.png"];
     $scope.players[uniqueId].image = images[Math.floor(Math.random() * (images.length - 1) + 0)];
+    console.log("associate image function hit");
   };
 
   $scope.racerMover = function (data) {
-    if (!$scope.players[data.userId].image) {
-      $scope.associateImageWithUniqueId(data.userId);
-    }
-
     $scope.players[data.userId].name = data.name;
     $scope.players[data.userId].score = data.shakes;
+    console.log("scope.players: ", $scope.players[data.userId]);
+    if(!$scope.players[data.userId].image) {
+      $scope.associateImageWithUniqueId(data.userId);
+    }
+    
 
     $scope.$apply();
 
