@@ -98,8 +98,8 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   };
 
   $scope.racerMover = function (data) {
-    $scope.players[data.userId].name = data.name;
-    $scope.players[data.userId].score = data.shakes;
+    $scope.players[data.userId] = {name: data.name, score: data.shakes };
+
     console.log("scope.players: ", $scope.players[data.userId]);
     if(!$scope.players[data.userId].image) {
       $scope.associateImageWithUniqueId(data.userId);
