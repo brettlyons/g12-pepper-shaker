@@ -85,14 +85,14 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     $scope.socket.emit('reset', {});
   };
   
-  $scope.deactivateSocket = function () {
+  $scope.deactivateSocket = function() {
     $scope.socket.emit('reset', {});
     $scope.socket.removeAllListeners('moveracer');
   };
-  $scope.associateImageWithUniqueId = function (uniqueId) {
-    var images = ["/images/pony1.png",
-                  "/images/pony2.png",
-                  "/images/pony3.png"];
+  $scope.associateImageWithUniqueId = function(uniqueId) {
+    const images = ['/images/pony1.png',
+                  '/images/pony2.png',
+                  '/images/pony3.png'];
 
     if (!$scope.imgCache) { $scope.imgCache = {}; }
     if (!$scope.imgCache[uniqueId]) {$scope.imgCache[uniqueId] = images[Math.floor(Math.random() * (images.length - 1) + 0)]; }
@@ -101,21 +101,20 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   };
 
   $scope.racerMover = function (data) {
-    if (!$scope.players[data.userId].image) {
-      $scope.associateImageWithUniqueId(data.userId);
-    }
 
     $scope.players[data.userId] = {
       name: data.name,
       score: data.shakes,
       image: $scope.imgCache[data.userId]
     };
-    
-    console.log("scope.players: ", $scope.players);
+
+    if (!$scope.players[data.userId].image) {
+      $scope.associateImageWithUniqueId(data.userId);
+    }
 
     $scope.$apply();
 
-    if($scope.players[data.userId].score > 101 ) { // 100 is for 100% width on the DOM
+    if ($scope.players[data.userId].score > 100 ) { // 100 is for 100% width on the DOM
       $scope.winner = $scope.players[data.userId].name;
       $scope.deactivateSocket();
       $scope.$apply();
