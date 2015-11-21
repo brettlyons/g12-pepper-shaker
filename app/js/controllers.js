@@ -94,15 +94,23 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
                   "/images/pony2.png",
                   "/images/pony3.png"];
 
-    if(!$scope.imgCache) { $scope.imgCache = {}; }
-    if(!$scope.imgCache[uniqueId]) {$scope.imgCache[uniqueId] = images[Math.floor(Math.random() * (images.length - 1) + 0)]; }
+    if (!$scope.imgCache) { $scope.imgCache = {}; }
+    if (!$scope.imgCache[uniqueId]) {$scope.imgCache[uniqueId] = images[Math.floor(Math.random() * (images.length - 1) + 0)]; }
     
     console.log("associate image function hit");
   };
 
   $scope.racerMover = function (data) {
-    $scope.associateImageWithUniqueId(data.userId);
-    $scope.players[data.userId] = {name: data.name, score: data.shakes, image: $scope.imgCache[data.userId]};
+    if (!$scope.players[data.userId].image) {
+      $scope.associateImageWithUniqueId(data.userId);
+    }
+
+    $scope.players[data.userId] = {
+      name: data.name,
+      score: data.shakes,
+      image: $scope.imgCache[data.userId]
+    };
+    
     console.log("scope.players: ", $scope.players);
 
     $scope.$apply();
