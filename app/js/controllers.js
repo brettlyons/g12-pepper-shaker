@@ -49,7 +49,7 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
       event.acceleration.z;
 
     if ($scope.totalAcceleration > 20) {
-      new Audio('../../Maracas2.mp3').play();
+      new Audio('../Maracas2.mp3').play();
 
       $scope.shakes++;
 
