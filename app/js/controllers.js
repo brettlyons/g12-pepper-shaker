@@ -1,5 +1,5 @@
 const ACCELERATION_REPORT_MIN = 12;
-const SHAKES_TO_WIN = 250;
+const SHAKES_TO_WIN = 1000;
 const maracas = new Audio('../../Maracas2.mp3');
 
 app.controller('PhoneController', function($scope, $location, $rootScope) {
