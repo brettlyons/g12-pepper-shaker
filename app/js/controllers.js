@@ -97,11 +97,11 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     $scope.randomNum = Math.floor(Math.random() * ($scope.images.length - 1) + 0);
     $scope.image = $scope.images[$scope.randomNum];
 
-    $scope.players[data.userId] =  {name: data.name, score: (data.shakes), image: $scope.image};
+    $scope.players[data.userId] =  {name: data.name, score: data.shakes, image: $scope.image};
 
     $scope.$apply();
 
-    if($scope.players[data.userId].score > 100 ) { // 100 is for 100% width on the DOM
+    if($scope.players[data.userId].score > 101 ) { // 100 is for 100% width on the DOM
       $scope.winner = $scope.players[data.userId].name;
       $scope.deactivateSocket();
       $scope.$apply();
