@@ -93,14 +93,16 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     var images = ["/images/pony1.png",
                   "/images/pony2.png",
                   "/images/pony3.png"];
-    $scope.players[uniqueId].image = images[Math.floor(Math.random() * (images.length - 1) + 0)];
+    $scope.players[uniqueId][image] = images[Math.floor(Math.random() * (images.length - 1) + 0)];
     console.log("associate image function hit");
   };
 
   $scope.racerMover = function (data) {
+    
     $scope.players[data.userId] = {name: data.name, score: data.shakes };
 
-    console.log("scope.players: ", $scope.players[data.userId]);
+    console.log("scope.players: ", $scope.players);
+
     if(!$scope.players[data.userId].image) {
       $scope.associateImageWithUniqueId(data.userId);
     }
