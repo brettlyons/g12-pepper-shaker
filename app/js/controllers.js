@@ -100,12 +100,10 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     console.log("associate image function hit");
   };
 
-  $scope.racerMover = function (data) {
-
+  $scope.racerMover = function(data) {
     if (!$scope.players[data.userId] || !$scope.players[data.userId].image) {
       $scope.associateImageWithUniqueId(data.userId);
     }
-
     $scope.players[data.userId] = {
       name: data.name,
       score: data.shakes,
