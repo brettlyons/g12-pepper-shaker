@@ -2,7 +2,8 @@ const ACCELERATION_REPORT_MIN = 12;
 const SHAKES_TO_WIN = 100;
 
 app.controller('PhoneController', function($scope, $location, $rootScope) {
-  //const maracas = new Audio('../../Maracas2.mp3');
+  const maracas = new Audio('../../Maracas2.mp3');
+  //const maracas = new Audio('./app/Maracas2.mp3');
   $scope.socket = io();
   $scope.shakes = 0;
   $scope.viewDashboard = false;
@@ -48,8 +49,8 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
       event.acceleration.y +
       event.acceleration.z;
 
-    if ($scope.totalAcceleration > 20) {
-      new Audio('./app/Maracas2.mp3').play();
+    if ($scope.totalAcceleration > ACCELERATION_REPORT_MIN) {
+      maracas.play();
 
       $scope.shakes++;
 
