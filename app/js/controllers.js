@@ -89,15 +89,20 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
     $scope.socket.emit('reset', {});
     $scope.socket.removeAllListeners('moveracer');
   };
-  
-  $scope.racerMover = function (data) {
-    $scope.images = ["/images/pony1.png",
-                    "/images/pony2.png",
-                     "/images/pony3.png"];
-    $scope.randomNum = Math.floor(Math.random() * ($scope.images.length - 1) + 0);
-    $scope.image = $scope.images[$scope.randomNum];
+  $scope.associateImageWithUniqueId = function (uniqueId) {
+    var images = ["/images/pony1.png",
+                  "/images/pony2.png",
+                  "/images/pony3.png"];
+    $scope.players[uniqueId].image = images[Math.floor(Math.random() * (images.length - 1) + 0)];
+  };
 
-    $scope.players[data.userId] =  {name: data.name, score: data.shakes, image: $scope.image};
+  $scope.racerMover = function (data) {
+    if (!$scope.players[data.userId].image) {
+      $scope.associateImageWithUniqueId(data.userId);
+    }
+
+    $scope.players[data.userId].name = data.name;
+    $scope.players[data.userId].score = data.shakes;
 
     $scope.$apply();
 
