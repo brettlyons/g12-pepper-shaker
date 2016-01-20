@@ -12,11 +12,12 @@ app.controller('PhoneController', function($scope, $location, $rootScope) {
   };
 
   $scope.validatePassword = function() {
-    if ($scope.password !== '********') {
-      return $location.url('/');
-    } else {
-      return $location.url('/playgrid');
-    }
+    return $location.url('/playgrid');
+    // if ($scope.password !== '********') {
+    //   return $location.url('/');
+    // } else {
+    //   return $location.url('/playgrid');
+    // }
   };
 
   //$rootScope.maracas.play();
