@@ -5,6 +5,6 @@ The repo for the phone based pepper-shaker game app
 
 http://obscure-harbor-9825.herokuapp.com
 
-If password is required to view dashboard, use ********.  8 stars in a row.
+If password is required to view the race is currently empty.  Not the word empty.  An empty field.  Just hit enter.
 
 Also, make sure you're using the http address, not the https version.
